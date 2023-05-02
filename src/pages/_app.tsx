@@ -1,11 +1,18 @@
-import { globalStyles } from '@/styles/global'
-import type { AppProps } from 'next/app'
-import { Nunito } from 'next/font/google'
+import { globalStyles } from "@/styles/global";
+import type { AppProps } from "next/app";
+import { Nunito } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 
-export const nunito = Nunito({ subsets: ['latin'] })
+export const nunito = Nunito({ subsets: ["latin"] });
 
-globalStyles()
+globalStyles();
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
+  return (
+    <SessionProvider session={session}>
+      <div className={nunito.className}>
+        <Component {...pageProps} />
+      </div>
+    </SessionProvider>
+  );
 }
