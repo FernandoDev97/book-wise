@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border
+  }
+
+  body {
+    @apply font-nunito antialiased text-gray-100 bg-gray-800
+  }
+
+  a {
+    @apply text-inherit
+  }
+
+  button {
+    @apply cursor-pointer
+  }
+
+  button, input, textarea {
+    font-family: inherit;
+  }
+}
+
+.background-gradient-login {
+  background: linear-gradient(0deg, rgba(42, 40, 121, 0.60) 0%, rgba(42, 40, 121, 0.60) 100%), rgba(0, 0, 0, 0.60);
+  backdrop-filter: blur(1px);
+}
