@@ -1,0 +1,11 @@
+version: '3'
+
+services: 
+  book-wise-full-stack:
+    image: bitnami/postgresql:latest
+    ports: 
+      - 5432:5432
+    environment: 
+      - POSTGRESQL_USERNAME=book-wise
+      - POSTGRESQL_PASSWORD=book-wise
+      - POSTGRESQL_DATABASE=book-wise-db
