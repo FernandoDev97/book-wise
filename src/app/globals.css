@@ -88,3 +88,10 @@
     font-family: inherit;
   }
 }
+
+.main-layout-pages {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}

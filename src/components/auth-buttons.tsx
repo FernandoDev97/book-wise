@@ -13,7 +13,7 @@ export const AuthButtons = ({ callbackUrl = '/' }: AuthButtonsProps) => {
   const { status, data } = useSession()
   const router = useRouter()
 
-  console.log(status, data)
+  // console.log(status, data)
 
   const handleSignIn = (provider?: string) => {
     if (!provider) {

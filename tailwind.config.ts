@@ -52,6 +52,7 @@ const config = {
       },
       backgroundImage: {
         'logo-section-bg': 'url(/images/logo-section-bg.png)',
+        'sidebar-bg': 'url(/images/sidebar-bg.png)',
       },
     },
   },
