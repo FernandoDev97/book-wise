@@ -3,7 +3,7 @@
 import { Binoculars, ChartLineUp, User } from '@phosphor-icons/react'
 
 interface TitlePagePros {
-  title: 'Início' | 'Explorar' | 'Perfil'
+  title?: 'Início' | 'Explorar' | 'Perfil'
 }
 
 const RENDER_ICONS = [
@@ -26,7 +26,7 @@ export const PageTitle = ({ title }: TitlePagePros) => {
     (item) =>
       item.title === title && (
         <div
-          className="flex items-center gap-3 [&>svg]:text-green-100 mb-11"
+          className="flex items-center gap-3 [&>svg]:text-green-100"
           key={item.title}
         >
           {item.icon}
