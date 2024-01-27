@@ -1,9 +1,11 @@
-import { LatestRatings } from '@/components/pages/home/latest-ratings'
+import { HomePage } from '@/components/pages/home'
 
 const Home = async () => {
   return (
     <section className="grid grid-cols-3 w-full h-full overflow-hidden gap-16">
-      <LatestRatings />
+      <div className="col-span-2">
+        <HomePage />
+      </div>
     </section>
   )
 }
