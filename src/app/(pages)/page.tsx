@@ -1,9 +1,11 @@
-import { getServerSession } from 'next-auth'
-import { options } from '../api/auth/[...nextauth]/options'
+import { LatestRatings } from '@/components/pages/home/latest-ratings'
 
 const Home = async () => {
-  const session = await getServerSession(options)
-  return <div>Testewww</div>
+  return (
+    <section className="grid grid-cols-3 w-full h-full overflow-hidden gap-16">
+      <LatestRatings />
+    </section>
+  )
 }
 
 export default Home
