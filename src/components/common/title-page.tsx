@@ -22,17 +22,16 @@ const RENDER_ICONS = [
 ]
 
 export const TitlePage = ({ title }: TitlePagePros) => {
-  return (
-    <div className="flex items-center gap-3 [&>svg]:text-green-100 mb-11">
-      {RENDER_ICONS.map(
-        (item) =>
-          item.title === title && (
-            <div key={item.title}>
-              {item.icon}
-              <h1 className="text-2xl font-bold">{item.title}</h1>
-            </div>
-          ),
-      )}
-    </div>
+  return RENDER_ICONS.map(
+    (item) =>
+      item.title === title && (
+        <div
+          className="flex items-center gap-3 [&>svg]:text-green-100 mb-11"
+          key={item.title}
+        >
+          {item.icon}
+          <h1 className="text-2xl font-bold">{item.title}</h1>
+        </div>
+      ),
   )
 }
