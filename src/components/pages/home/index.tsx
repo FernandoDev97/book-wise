@@ -2,12 +2,11 @@ import { RatingCard } from '@/components/common/rating-card'
 import { TitlePage } from '@/components/common/title-page'
 import React from 'react'
 
-export const LatestRatings = async () => {
+export const HomePage = () => {
   return (
     <div>
-      <div className="col-span-2">
-        <TitlePage title="Início" />
-      </div>
+      <TitlePage title="Início" />
+
       <p className="text-sm">Avaliações mais recentes</p>
 
       <section className="flex flex-col gap-3 mt-4">

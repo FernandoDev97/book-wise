@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Loading = () => {
-  return <div>carregando</div>
+const Loading = async () => {
+  return <div className="hfull h-full">Caree</div>
 }
 
 export default Loading

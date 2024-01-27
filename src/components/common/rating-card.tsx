@@ -23,10 +23,10 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
   }, [])
   const distance = getRelativeTimeString(new Date(rating.created_at), 'pt-BR')
   return (
-    <div className="">
+    <div className="w-full">
       {rating && firstRender && (
         <div className="flex items-start justify-between mb-8">
-          <section>
+          <section className="flex gap-2 items-center ">
             <Link href={`/profile/${rating.user_id}`}>
               <Avatar>
                 <AvatarImage
@@ -36,9 +36,13 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </Link>
-            <div>
-              <p>{rating.user.name}</p>
-              <p>{distance}</p>
+            <div className="flex flex-col">
+              <Link className="text-base" href={`/profile/${rating.user_id}`}>
+                {rating.user.name}
+              </Link>
+              <span className="text-gray-400 text-sm capitalize">
+                {distance}
+              </span>
             </div>
           </section>
           rating
