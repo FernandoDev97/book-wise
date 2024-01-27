@@ -1,4 +1,4 @@
-import { AuthButtons } from '@/components/auth-buttons'
+import { AuthButtons } from '@/components/common/auth-buttons'
 import Image from 'next/image'
 
 const Login = () => {
