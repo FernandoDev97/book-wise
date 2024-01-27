@@ -1,4 +1,4 @@
-import { Sidebar } from '@/components/sidebar'
+import { Sidebar } from '@/components/common/sidebar'
 
 export default async function PagesLayout({
   children,

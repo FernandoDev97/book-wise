@@ -9,9 +9,11 @@ import {
 } from '@phosphor-icons/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Button } from './ui/button'
+
 import { signOut, useSession } from 'next-auth/react'
 import { useMemo } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
 
 const NAV_ITEMS = [
   {
@@ -30,8 +32,10 @@ export const Navigation = () => {
   const { status, data } = useSession()
   const path = usePathname()
 
+  const userName = data?.user.name.split(' ')[0]
+
   const navItems = useMemo(() => {
-    if (status === 'authenticated') {
+    if (data) {
       return NAV_ITEMS.concat({
         label: 'Pefil',
         href: `/profile/${data.user.id}`,
@@ -40,7 +44,7 @@ export const Navigation = () => {
     }
 
     return NAV_ITEMS
-  }, [status, data])
+  }, [data])
 
   return (
     <nav className="flex flex-col gap-7 w-full h-full">
@@ -65,17 +69,19 @@ export const Navigation = () => {
       <div className="mt-auto w-full ">
         {status === 'authenticated' && (
           <div className="flex justify-between items-center w-full">
-            <img
-              className="w-8 h-8 rounded-full"
-              src={data.user.image}
-              alt=""
-            />
-            <Button
+            <Avatar>
+              <AvatarImage
+                src={data.user.image}
+                alt={`Image de perfil do(a) ${data.user.name}`}
+              />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Button className="flex p-0 font-bold">{userName}</Button>
+            <SignOut
               onClick={() => signOut()}
-              className="flex p-0 gap-2 font-bold"
-            >
-              Fazer logout <SignOut className="text-red-500" size={24} />
-            </Button>
+              className="text-red-500 cursor-pointer"
+              size={24}
+            />
           </div>
         )}
         {status === 'unauthenticated' && (
