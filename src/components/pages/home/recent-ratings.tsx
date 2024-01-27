@@ -1,21 +1,18 @@
-import { RatingCard } from '@/components/common/rating-card'
-import { TitlePage } from '@/components/common/title-page'
+import { RatingCard } from '@/components/pages/home/rating-card'
 import React from 'react'
 
-export const HomePage = () => {
+export const RecentRatings = () => {
   return (
     <div>
-      <TitlePage title="Início" />
-
       <p className="text-sm">Avaliações mais recentes</p>
 
-      <section className="flex flex-col gap-3 mt-4">
+      <section className="flex flex-col gap-3 mt-4 ">
         {Array.from({ length: 20 }).map((_, i) => (
           <RatingCard
             key={i}
             rating={{
               id: 'aa',
-              rate: 4,
+              rate: 3,
               user: {
                 name: 'Fernando Souza',
                 image:
@@ -26,12 +23,12 @@ export const HomePage = () => {
                 created_at: new Date(),
               },
               book: {
-                author: 'Fernando Souza',
-                cover_url:
-                  'https://lh3.googleusercontent.com/a/ACg8ocI9UKXWzENMToI5WFZEkJmaGmz96fR5Je63eFPU2SMD5w=s96-c',
+                author: 'J.R.R. Tolkien',
+                cover_url: '/images/Book.png',
                 id: 'asjfklasdf',
-                name: 'Julia',
-                summary: 'Julia',
+                name: 'O Hobbit',
+                summary:
+                  'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh jhjs lorem ipum lorem lorem morem mais menos mais alguma coisa mais coisa so mais um pou1quino inconstituciona',
                 total_pages: 100,
                 created_at: new Date(),
               },
