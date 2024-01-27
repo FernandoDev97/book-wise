@@ -21,7 +21,7 @@ const RENDER_ICONS = [
   },
 ]
 
-export const TitlePage = ({ title }: TitlePagePros) => {
+export const PageTitle = ({ title }: TitlePagePros) => {
   return RENDER_ICONS.map(
     (item) =>
       item.title === title && (
