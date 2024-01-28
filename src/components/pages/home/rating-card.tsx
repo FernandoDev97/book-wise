@@ -58,7 +58,7 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
               </span>
             </div>
           </section>
-          <RatingStars rating={rating.rate} />
+          <RatingStars size={16} rating={rating.rate} />
         </div>
 
         <div className="flex gap-5">
