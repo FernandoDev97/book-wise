@@ -5,7 +5,7 @@ import { PopularBookCard } from './popular-book-card'
 
 export const PopularBooks = () => {
   return (
-    <section className="flex flex-col gap-2">
+    <section className="flex flex-col gap-1">
       <div className="flex justify-between items-center">
         <span className="text-sm text-gray-100">Livros populares</span>
         <Link

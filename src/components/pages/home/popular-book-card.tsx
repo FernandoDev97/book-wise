@@ -15,7 +15,7 @@ export const PopularBookCard = ({ book }: PopularBookCardProps) => {
   return (
     <Link
       href={`/explore?book=${book.id}`}
-      className="w-full h-[130px] bg-gray-700 rounded-lg px-5 py-4 flex mb-2 hover:border-[1px] border-purple-100/7s0 transition-all "
+      className="w-full h-[130px] bg-gray-700 rounded-lg px-5 py-4 flex mb-2 border border-gray-700 transition hover:border-gray-600 "
     >
       <div className="flex gap-5">
         <Image
@@ -26,10 +26,10 @@ export const PopularBookCard = ({ book }: PopularBookCardProps) => {
           alt="name"
           src="/images/Book.png"
         />
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between max-w-[160px] ">
           <div>
-            <p className="text-base font-bold">{book.name}</p>
-            <p className="text-gray-400 text-sm">{book.author}</p>
+            <p className="text-base font-bold line-clamp-2 ">{book.name}</p>
+            <p className="text-gray-400 text-sm line-clamp-1">{book.author}</p>
           </div>
           <RatingStars rating={book.avgRating} className="mt-auto" size={16} />
         </div>
