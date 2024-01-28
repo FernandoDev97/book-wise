@@ -3,16 +3,18 @@ import React from 'react'
 
 export const RecentRatings = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <p className="text-sm">Avaliações mais recentes</p>
 
-      <section className="flex flex-col gap-3 mt-4 ">
+      <section className="flex flex-col gap-3">
         {Array.from({ length: 20 }).map((_, i) => (
           <RatingCard
             key={i}
             rating={{
               id: 'aa',
               rate: 3,
+              book_id: 'shdsakhd',
+              user_id: 'ksjdklsajd',
               user: {
                 name: 'Fernando Souza',
                 image:
@@ -33,6 +35,7 @@ export const RecentRatings = () => {
                 created_at: new Date(),
               },
               created_at: new Date(),
+              description: 'kdjkajsjd',
             }}
           />
         ))}

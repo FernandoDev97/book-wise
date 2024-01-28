@@ -6,7 +6,7 @@ import { Star } from '@phosphor-icons/react'
 interface RatingStarsProps {
   rating: number
   className?: string
-  size?: 14 | 20 | 24
+  size?: 14 | 16 | 20 | 24
 }
 
 export const RatingStars = ({
