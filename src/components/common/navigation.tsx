@@ -32,8 +32,6 @@ export const Navigation = () => {
   const { status, data } = useSession()
   const path = usePathname()
 
-  const userName = data?.user.name.split(' ')[0]
-
   const navItems = useMemo(() => {
     if (data) {
       return NAV_ITEMS.concat({
@@ -76,7 +74,12 @@ export const Navigation = () => {
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <Button className="flex p-0 font-bold">{userName}</Button>
+            <Button
+              title={data.user.name}
+              className="flex p-0 font-bold line-clamp-1 w-[90px]"
+            >
+              {data?.user.name}
+            </Button>
             <SignOut
               onClick={() => signOut()}
               className="text-red-500 cursor-pointer"
