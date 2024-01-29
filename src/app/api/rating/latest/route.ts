@@ -1,18 +1,24 @@
 import { prismaClient } from '@/lib/prisma'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export const GET = async (request: NextRequest) => {
-  const teste = {
-    test: 'TESTE',
-  }
+export const GET = async () => {
+  const ratings = await prismaClient.rating.findMany({
+    orderBy: {
+      created_at: 'desc',
+    },
+    include: {
+      user: true,
+      book: true,
+    },
+    take: 10,
+  })
 
-  const users = await prismaClient.user.findMany()
   return NextResponse.json(
     {
-      message: 'Please enter title',
+      ratings,
     },
     {
-      status: 400,
+      status: 200,
     },
   )
 }
