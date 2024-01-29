@@ -24,7 +24,7 @@ export const PopularBookCard = ({ book }: PopularBookCardProps) => {
           height={94}
           sizes="100vh"
           alt="name"
-          src="/images/Book.png"
+          src={book.cover_url}
         />
         <div className="flex flex-col justify-between max-w-[160px] ">
           <div>
