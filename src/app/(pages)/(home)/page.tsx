@@ -3,38 +3,28 @@ import { BookWithAvgRating } from '@/components/pages/home/popular-book-card'
 import { PopularBooks } from '@/components/pages/home/popular-books'
 import { RatingWithAuthorAndBook } from '@/components/pages/home/rating-card'
 import { RecentRatings } from '@/components/pages/home/recent-ratings'
+import { api } from '@/lib/axios'
 
 async function recentRatings(): Promise<RatingWithAuthorAndBook[]> {
-  const response = await fetch(`${process.env.API_URL}/rating/latest`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  })
+  const response = await api.get(`${process.env.API_URL}/rating/latest`)
 
-  const { ratings } = await response.json()
+  const { ratings } = await response.data
   return ratings
 }
 
-async function popularBooks(): Promise<BookWithAvgRating[]> {
-  const response = await fetch(`${process.env.API_URL}/books/popular`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+async function popularBooks(take?: number): Promise<BookWithAvgRating[]> {
+  const response = await api.get(`${process.env.API_URL}/books/popular`, {
+    params: {
+      take,
     },
   })
 
-  const { booksWithAvgRating } = await response.json()
-  return booksWithAvgRating
+  const { books } = await response.data
+  return books
 }
 
 const Home = async () => {
-  const [ratings, booksWithAvgRating] = await Promise.all([
-    recentRatings(),
-    popularBooks(),
-  ])
+  const [ratings, books] = await Promise.all([recentRatings(), popularBooks(2)])
 
   return (
     <main className="w-full h-full ">
@@ -45,7 +35,7 @@ const Home = async () => {
         </section>
 
         <section className="col-span-1 flex flex-col mt-20">
-          <PopularBooks popularBooks={booksWithAvgRating ?? []} />
+          <PopularBooks popularBooks={books ?? []} />
         </section>
       </div>
     </main>

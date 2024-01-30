@@ -8,7 +8,7 @@ export default async function PagesLayout({
   return (
     <main className="main-layout-pages overflow-hidden">
       <Sidebar />
-      <div className="w-full h-[100vh] max-w-[996px] mx-auto pt-[72px] ">
+      <div className="w-full h-[100vh] max-w-[996px] mx-auto pt-[72px]">
         {children}
       </div>
     </main>
