@@ -2,7 +2,9 @@
 import { prismaClient } from '@/lib/prisma'
 import { NextRequest, NextResponse } from 'next/server'
 
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
+  const params = request.nextUrl.searchParams.get('take')
+  const take = Number(params)
   const books = await prismaClient.book.findMany({
     orderBy: {
       ratings: {
@@ -12,7 +14,7 @@ export const GET = async () => {
     include: {
       ratings: true,
     },
-    take: 4,
+    take: take || 4,
   })
 
   const booksAvgRating = await prismaClient.rating.groupBy({
@@ -40,7 +42,7 @@ export const GET = async () => {
 
   return NextResponse.json(
     {
-      booksWithAvgRating,
+      books: booksWithAvgRating,
     },
     {
       status: 200,
