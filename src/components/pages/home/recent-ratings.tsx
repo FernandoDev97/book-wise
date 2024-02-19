@@ -1,11 +1,11 @@
 import {
   RatingCard,
-  RatingWithAuthorAndBook,
+  RatingWithUserAndBook,
 } from '@/components/pages/home/rating-card'
 import React from 'react'
 
 interface RecentRatingsProps {
-  recentRatings: RatingWithAuthorAndBook[]
+  recentRatings: RatingWithUserAndBook[]
 }
 
 export const RecentRatings = ({ recentRatings }: RecentRatingsProps) => {

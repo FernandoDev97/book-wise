@@ -10,13 +10,13 @@ import { useToggleShowMore } from '@/hooks/useToggleShowMore'
 import { Button } from '../../ui/button'
 import { User as UserAvatar } from 'lucide-react'
 
-export interface RatingWithAuthorAndBook extends Rating {
+export interface RatingWithUserAndBook extends Rating {
   user: User
   book: Book
 }
 
 interface RatingCardProps {
-  rating: RatingWithAuthorAndBook
+  rating: RatingWithUserAndBook
 }
 
 const MAX_SUMMARY_LENGTH = 180
