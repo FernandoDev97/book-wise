@@ -1,30 +1,11 @@
 import { PageTitle } from '@/components/common/page-title'
-import { BookWithAvgRating } from '@/components/pages/home/popular-book-card'
 import { PopularBooks } from '@/components/pages/home/popular-books'
-import { RatingWithUserAndBook } from '@/components/pages/home/rating-card'
 import { RecentRatings } from '@/components/pages/home/recent-ratings'
-import { api } from '@/lib/axios'
-
-async function recentRatings(): Promise<RatingWithUserAndBook[]> {
-  const response = await api.get(`${process.env.API_URL}/rating/latest`)
-
-  const { ratings } = await response.data
-  return ratings
-}
-
-async function popularBooks(take?: number): Promise<BookWithAvgRating[]> {
-  const response = await api.get(`${process.env.API_URL}/books/popular`, {
-    params: {
-      take,
-    },
-  })
-
-  const { books } = await response.data
-  return books
-}
+import { recentRatings } from './_actions/recent-ratings'
+import { popularBooks } from './_actions/popular-books'
 
 const Home = async () => {
-  const [ratings, books] = await Promise.all([recentRatings(), popularBooks(4)])
+  const [ratings, books] = await Promise.all([recentRatings(), popularBooks()])
 
   return (
     <main className="w-full h-full ">
