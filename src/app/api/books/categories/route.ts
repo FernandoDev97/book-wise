@@ -5,16 +5,22 @@ import { NextRequest, NextResponse } from 'next/server'
 import { options } from '../../auth/[...nextauth]/options'
 
 export const GET = async (request: NextRequest) => {
-  const categoryId = request.nextUrl.searchParams.get('categoryId') as string
+  const categoryId = request?.nextUrl?.searchParams.get('category')
 
-  const books = await prismaClient.book.findMany({
+  const booksWithCategorieId = await prismaClient.book.findMany({
     where: {
       categories: {
         some: {
-          categoryId,
+          categoryId: categoryId || undefined,
         },
       },
     },
+    include: {
+      ratings: true,
+    },
+  })
+
+  const books = await prismaClient.book.findMany({
     include: {
       ratings: true,
     },
@@ -45,7 +51,7 @@ export const GET = async (request: NextRequest) => {
     userBooksIds = userBooks.map((book) => book.id)
   }
 
-  const booksWithAvgRating = books.map((book) => {
+  const booksWithAvgRating = (booksWithCategorieId || books).map((book) => {
     const bookAvgRating = booksAvgRating.find(
       (avgRating) => avgRating.book_id === book.id,
     )

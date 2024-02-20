@@ -1,14 +1,10 @@
 import { RatingStars } from '@/components/common/rating-stars'
-import { Book, Rating } from '@prisma/client'
 import Image from 'next/image'
 import React from 'react'
-
-export interface BookAndRating extends Book {
-  ratings: Rating
-}
+import { BookWithAvgRating } from '../home/popular-book-card'
 
 interface BookItemProps {
-  book: BookAndRating
+  book: BookWithAvgRating
 }
 
 export const BookItem = ({ book }: BookItemProps) => {
@@ -32,7 +28,7 @@ export const BookItem = ({ book }: BookItemProps) => {
           </p>
         </div>
 
-        <RatingStars rating={book.ratings.rate} className="mt-auto" />
+        <RatingStars rating={book.avgRating} className="mt-auto" />
       </div>
     </div>
   )
