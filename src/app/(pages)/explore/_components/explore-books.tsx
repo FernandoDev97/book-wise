@@ -5,7 +5,7 @@ import { BookItem } from './book-item'
 import { BooksFilter } from './books-filter'
 import { useEffect, useState } from 'react'
 import { findCategoriesBooks } from '@/app/(pages)/explore/_actions/find-categories-books'
-import { BookWithAvgRating } from '../../(home)/_components/popular-book-card'
+import { BookWithAvgRating } from '@/@types/types-prisma'
 
 interface ExploreBooksProps {
   books: BookWithAvgRating[]

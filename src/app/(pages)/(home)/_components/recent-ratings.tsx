@@ -1,7 +1,5 @@
-import {
-  RatingCard,
-  RatingWithUserAndBook,
-} from '@/app/(pages)/(home)/_components/rating-card'
+import { RatingWithUserAndBook } from '@/@types/types-prisma'
+import { RatingCard } from '@/app/(pages)/(home)/_components/rating-card'
 import React from 'react'
 
 interface RecentRatingsProps {
