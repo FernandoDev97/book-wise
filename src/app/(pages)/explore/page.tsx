@@ -6,9 +6,10 @@ import React from 'react'
 import { findCategoriesBooks } from './_actions/find-categories-books'
 
 const Explore = async () => {
-  const { books } = await findCategoriesBooks(null)
-
-  const categories = await prismaClient.category.findMany()
+  const [{ books }, categories] = await Promise.all([
+    await findCategoriesBooks(null),
+    await prismaClient.category.findMany(),
+  ])
   return (
     <main className="w-full h-full flex flex-col pr-5 overflow-auto pb-5 no-scrollbar">
       <div className="grid grid-cols-2">
