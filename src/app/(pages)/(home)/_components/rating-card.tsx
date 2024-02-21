@@ -1,19 +1,19 @@
 'use client'
 
 import { getRelativeTimeString } from '@/utils/get-relative-time-string'
-import { Book, Rating, User } from '@prisma/client'
+
 import Link from 'next/link'
-import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
-import { RatingStars } from '../../common/rating-stars'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '../../../../components/ui/avatar'
+import { RatingStars } from '../../../../components/common/rating-stars'
 import Image from 'next/image'
 import { useToggleShowMore } from '@/hooks/useToggleShowMore'
-import { Button } from '../../ui/button'
+import { Button } from '../../../../components/ui/button'
 import { User as UserAvatar } from 'lucide-react'
-
-export interface RatingWithUserAndBook extends Rating {
-  user: User
-  book: Book
-}
+import { RatingWithUserAndBook } from '@/@types/types-prisma'
 
 interface RatingCardProps {
   rating: RatingWithUserAndBook

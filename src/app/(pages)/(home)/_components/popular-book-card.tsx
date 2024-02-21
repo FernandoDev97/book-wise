@@ -1,11 +1,7 @@
+import { BookWithAvgRating } from '@/@types/types-prisma'
 import { RatingStars } from '@/components/common/rating-stars'
-import { Book } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
-
-export interface BookWithAvgRating extends Book {
-  avgRating: number
-}
 
 interface PopularBookCardProps {
   book: BookWithAvgRating

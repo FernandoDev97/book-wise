@@ -1,6 +1,6 @@
 import { PageTitle } from '@/components/common/page-title'
-import { PopularBooks } from '@/components/pages/home/popular-books'
-import { RecentRatings } from '@/components/pages/home/recent-ratings'
+import { PopularBooks } from '@/app/(pages)/(home)/_components/popular-books'
+import { RecentRatings } from '@/app/(pages)/(home)/_components/recent-ratings'
 import { recentRatings } from './_actions/recent-ratings'
 import { popularBooks } from './_actions/popular-books'
 

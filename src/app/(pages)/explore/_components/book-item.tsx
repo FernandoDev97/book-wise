@@ -1,7 +1,7 @@
+import { BookWithAvgRating } from '@/@types/types-prisma'
 import { RatingStars } from '@/components/common/rating-stars'
 import Image from 'next/image'
 import React from 'react'
-import { BookWithAvgRating } from '../home/popular-book-card'
 
 interface BookItemProps {
   book: BookWithAvgRating
@@ -9,7 +9,12 @@ interface BookItemProps {
 
 export const BookItem = ({ book }: BookItemProps) => {
   return (
-    <div className="w-full bg-gray-700 py-4 px-5 rounded-lg h-auto flex gap-5">
+    <div className="w-full overflow-hidden relative bg-gray-700 py-4 px-5 rounded-lg h-auto flex gap-5">
+      {book.alreadyRead && (
+        <div className="absolute uppercase rounded-l-sm bottom-0 text-green-100 font-bold text-xs right-0 px-3 py-1 bg-[#0a313c]">
+          <span>Lido</span>
+        </div>
+      )}
       <Image
         src={book?.cover_url}
         alt={book?.name}

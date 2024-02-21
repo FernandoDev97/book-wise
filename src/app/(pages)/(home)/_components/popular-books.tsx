@@ -1,7 +1,8 @@
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import { BookWithAvgRating, PopularBookCard } from './popular-book-card'
+import { PopularBookCard } from './popular-book-card'
+import { BookWithAvgRating } from '@/@types/types-prisma'
 
 interface PopularBooksProps {
   popularBooks: BookWithAvgRating[]
