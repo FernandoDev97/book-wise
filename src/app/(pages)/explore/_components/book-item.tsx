@@ -1,7 +1,7 @@
 import { RatingStars } from '@/components/common/rating-stars'
 import Image from 'next/image'
 import React from 'react'
-import { BookWithAvgRating } from '../../../app/(pages)/(home)/_components/popular-book-card'
+import { BookWithAvgRating } from '../../(home)/_components/popular-book-card'
 
 interface BookItemProps {
   book: BookWithAvgRating

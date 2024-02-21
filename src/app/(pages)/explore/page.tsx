@@ -1,6 +1,6 @@
 import { Input } from '@/components/common/input'
 import { PageTitle } from '@/components/common/page-title'
-import { ExploreBooks } from '@/components/pages/explore/explore-books'
+import { ExploreBooks } from '@/app/(pages)/explore/_components/explore-books'
 import { prismaClient } from '@/lib/prisma'
 import React from 'react'
 import { findCategoriesBooks } from './_actions/find-categories-books'
