@@ -1,7 +1,7 @@
 import {
   RatingCard,
   RatingWithUserAndBook,
-} from '@/components/pages/home/rating-card'
+} from '@/app/(pages)/(home)/_components/rating-card'
 import React from 'react'
 
 interface RecentRatingsProps {
