@@ -18,7 +18,6 @@ interface BookItemProps {
 }
 
 export const BookItem = ({ book }: BookItemProps) => {
-  console.log(book)
   return (
     <Sheet>
       <SheetTrigger asChild>
