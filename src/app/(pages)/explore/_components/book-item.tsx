@@ -1,6 +1,6 @@
 'use client'
 
-import { BookWithAvgRating } from '@/@types/types-prisma'
+import { BookWithAvgRating, RatingWithAuthor } from '@/@types/types-prisma'
 import { RatingStars } from '@/components/common/rating-stars'
 import { Button } from '@/components/ui/button'
 import {
@@ -12,8 +12,17 @@ import {
 } from '@/components/ui/sheet'
 import { BookOpen, Bookmark } from 'lucide-react'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UserRatingCard } from './user-rating-card'
+import { getBookDetails } from '../_actions/get-book-details'
+import { CategoriesOnBooks, Category } from '@prisma/client'
+
+type BookDetails = BookWithAvgRating & {
+  ratings: RatingWithAuthor[]
+  categories: (CategoriesOnBooks & {
+    category: Category
+  })[]
+}
 
 interface BookItemProps {
   book: BookWithAvgRating
@@ -21,10 +30,22 @@ interface BookItemProps {
 
 export const BookItem = ({ book }: BookItemProps) => {
   const [open, setOpen] = useState(false)
+  const [bookDetails, setBooksDetails] = useState<BookDetails>()
 
-  if (open) {
-    console.log(book.id)
-  }
+  useEffect(() => {
+    async function bookDatails() {
+      if (open) {
+        const { book: bookDetail } = await getBookDetails(book.id)
+        setBooksDetails(bookDetail)
+      }
+    }
+
+    bookDatails()
+  }, [open, book.id])
+
+  const categories = bookDetails?.categories
+    .map((item) => item.category.name)
+    .join(', ')
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -38,10 +59,10 @@ export const BookItem = ({ book }: BookItemProps) => {
           <Image
             src={book?.cover_url}
             alt={book?.name}
-            width={108}
-            height={152}
+            width={0}
+            height={0}
             sizes="100vh"
-            className="object-cover"
+            className="object-cover w-[108px] h-[152px]"
           />
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col">
@@ -73,9 +94,11 @@ export const BookItem = ({ book }: BookItemProps) => {
               <div className="flex flex-col">
                 <div className="h-full w-full">
                   <SheetTitle asChild>
-                    <h2 className="text-lg font-bold">{book.name}</h2>
+                    <h2 className="text-lg font-bold">{bookDetails?.name}</h2>
                   </SheetTitle>
-                  <h3 className="text-base font-normal">{book.author}</h3>
+                  <h3 className="text-base font-normal">
+                    {bookDetails?.author}
+                  </h3>
                 </div>
                 <div className="flex flex-col gap-1">
                   <RatingStars
@@ -97,7 +120,7 @@ export const BookItem = ({ book }: BookItemProps) => {
                 <Bookmark className="text-green-100" />
                 <div>
                   <span className="text-gray-300 text-sm">Categoria</span>
-                  <h3 className="text-base font-bold">Aqui</h3>
+                  <h3 className="text-base font-bold">{categories}</h3>
                 </div>
               </div>
               <div className="flex w-full items-center gap-2">
@@ -121,21 +144,8 @@ export const BookItem = ({ book }: BookItemProps) => {
                 Avaliar
               </Button>
             </div>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <UserRatingCard
-                key={i}
-                rating={{
-                  rate: 2,
-                  description:
-                    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati',
-
-                  user: {
-                    name: 'Fernando Souza',
-                    image: 'https://github/FernandoDev97.png',
-                  },
-                  created_at: new Date(),
-                }}
-              />
+            {bookDetails?.ratings.map((rating) => (
+              <UserRatingCard key={rating.id} rating={rating} />
             ))}
           </main>
         </section>

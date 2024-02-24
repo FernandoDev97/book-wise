@@ -26,8 +26,8 @@ export const UserRatingCard = ({ rating }: UserRatingCardProps) => {
             <Avatar>
               <AvatarImage
                 className="w-full "
-                alt={`Foto de perfil de ${session?.user.name}`}
-                src={session?.user.image}
+                alt={`Foto de perfil de ${rating.user.name}`}
+                src={rating?.user?.image as string}
               />
               <AvatarFallback>
                 <UserProfileIcon />
@@ -36,7 +36,7 @@ export const UserRatingCard = ({ rating }: UserRatingCardProps) => {
           </Link>
 
           <div className="flex flex-col">
-            <p className="text-base font-bold">{session?.user.name}</p>
+            <p className="text-base font-bold">{rating.user.name}</p>
             <p className="text-gray-400 text-sm">{distance}</p>
           </div>
         </div>
