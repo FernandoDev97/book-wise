@@ -1,28 +1,33 @@
+'use client'
+
 import { BookWithAvgRating } from '@/@types/types-prisma'
 import { RatingStars } from '@/components/common/rating-stars'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { AvatarImage } from '@radix-ui/react-avatar'
-import { BookOpen, Bookmark, User } from 'lucide-react'
+import { BookOpen, Bookmark } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
+import { UserRatingCard } from './user-rating-card'
 
 interface BookItemProps {
   book: BookWithAvgRating
 }
 
 export const BookItem = ({ book }: BookItemProps) => {
+  const [open, setOpen] = useState(false)
+
+  if (open) {
+    console.log(book.id)
+  }
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button className="w-full overflow-hidden relative bg-gray-700 py-4 px-5 rounded-lg h-auto flex gap-5">
           {book.alreadyRead && (
@@ -116,85 +121,22 @@ export const BookItem = ({ book }: BookItemProps) => {
                 Avaliar
               </Button>
             </div>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <UserRatingCard
+                key={i}
+                rating={{
+                  rate: 2,
+                  description:
+                    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati',
 
-            <section className="w-full p-6 bg-gray-700 rounded-lg flex flex-col gap-5">
-              <div className="flex justify-between items-start">
-                <div className="flex gap-4">
-                  <Avatar>
-                    <AvatarImage className="w-full " src={book.cover_url} />
-                    <AvatarFallback>
-                      <User />
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex flex-col">
-                    <p className="text-base font-bold">Fernando Souza</p>
-                    <p className="text-gray-400 text-sm">Há 2 dias</p>
-                  </div>
-                </div>
-
-                <RatingStars rating={book.avgRating} />
-              </div>
-
-              <p className="text-gray-300 text-sm">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Obcaecati nobis beatae cumque nam, quos minus aut voluptatem
-                veniam atque quae inventore, nesciunt quod, officiis harum et
-                corporis dicta voluptates! Accusamus.
-              </p>
-            </section>
-            <section className="w-full p-6 bg-gray-700 rounded-lg flex flex-col gap-5">
-              <div className="flex justify-between items-start">
-                <div className="flex gap-4">
-                  <Avatar>
-                    <AvatarImage className="w-full " src={book.cover_url} />
-                    <AvatarFallback>
-                      <User />
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex flex-col">
-                    <p className="text-base font-bold">Fernando Souza</p>
-                    <p className="text-gray-400 text-sm">Há 2 dias</p>
-                  </div>
-                </div>
-
-                <RatingStars rating={book.avgRating} />
-              </div>
-
-              <p className="text-gray-300 text-sm">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Obcaecati nobis beatae cumque nam, quos minus aut voluptatem
-                veniam atque quae inventore, nesciunt quod, officiis harum et
-                corporis dicta voluptates! Accusamus.
-              </p>
-            </section>
-            <section className="w-full p-6 bg-gray-700 rounded-lg flex flex-col gap-5">
-              <div className="flex justify-between items-start">
-                <div className="flex gap-4">
-                  <Avatar>
-                    <AvatarImage className="w-full " src={book.cover_url} />
-                    <AvatarFallback>
-                      <User />
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex flex-col">
-                    <p className="text-base font-bold">Fernando Souza</p>
-                    <p className="text-gray-400 text-sm">Há 2 dias</p>
-                  </div>
-                </div>
-
-                <RatingStars rating={book.avgRating} />
-              </div>
-
-              <p className="text-gray-300 text-sm">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Obcaecati nobis beatae cumque nam, quos minus aut voluptatem
-                veniam atque quae inventore, nesciunt quod, officiis harum et
-                corporis dicta voluptates! Accusamus.
-              </p>
-            </section>
+                  user: {
+                    name: 'Fernando Souza',
+                    image: 'https://github/FernandoDev97.png',
+                  },
+                  created_at: new Date(),
+                }}
+              />
+            ))}
           </main>
         </section>
       </SheetContent>

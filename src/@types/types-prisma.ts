@@ -10,3 +10,7 @@ export interface RatingWithUserAndBook extends Rating {
   user: User
   book: Book
 }
+
+export interface RatingWithAuthor extends Rating {
+  user: User
+}
