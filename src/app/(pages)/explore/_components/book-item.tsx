@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react'
 import { UserRatingCard } from './user-rating-card'
 import { getBookDetails } from '../_actions/get-book-details'
 import { CategoriesOnBooks, Category } from '@prisma/client'
+import { RatingForm } from './rating-form'
 
 type BookDetails = BookWithAvgRating & {
   ratings: RatingWithAuthor[]
@@ -30,6 +31,7 @@ interface BookItemProps {
 
 export const BookItem = ({ book }: BookItemProps) => {
   const [open, setOpen] = useState(false)
+  const [showForm, setShowForm] = useState(false)
   const [bookDetails, setBooksDetails] = useState<BookDetails>()
 
   useEffect(() => {
@@ -78,78 +80,91 @@ export const BookItem = ({ book }: BookItemProps) => {
           </div>
         </button>
       </SheetTrigger>
-      <SheetContent className="bg-gray-800 border-none min-w-[660px] overflow-auto no-scrollbar">
-        <SheetHeader>
-          <main className="w-full h-[415px] bg-gray-700 px-8 py-6 rounded-[10px] mt-6 flex flex-col">
-            <section className="w-full h-[242px] flex gap-8 ">
-              <Image
-                src={book?.cover_url}
-                alt={book?.name}
-                width={0}
-                height={0}
-                sizes="100vh"
-                className="object-cover h-full w-[172px]"
-              />
+      {bookDetails && (
+        <SheetContent className="bg-gray-800 border-none min-w-[660px] overflow-auto no-scrollbar">
+          <SheetHeader>
+            <main className="w-full h-[415px] bg-gray-700 px-8 py-6 rounded-[10px] mt-6 flex flex-col">
+              <section className="w-full h-[242px] flex gap-8 ">
+                <Image
+                  src={book?.cover_url}
+                  alt={book?.name}
+                  width={0}
+                  height={0}
+                  sizes="100vh"
+                  className="object-cover h-full w-[172px]"
+                />
 
-              <div className="flex flex-col">
-                <div className="h-full w-full">
-                  <SheetTitle asChild>
-                    <h2 className="text-lg font-bold">{bookDetails?.name}</h2>
-                  </SheetTitle>
-                  <h3 className="text-base font-normal">
-                    {bookDetails?.author}
-                  </h3>
+                <div className="flex flex-col">
+                  <div className="h-full w-full">
+                    <SheetTitle asChild>
+                      <h2 className="text-lg font-bold">{bookDetails?.name}</h2>
+                    </SheetTitle>
+                    <h3 className="text-base font-normal">
+                      {bookDetails?.author}
+                    </h3>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <RatingStars
+                      size={20}
+                      rating={book.avgRating}
+                      className="mt-auto"
+                    />
+                    <span className="text-sm text-gray-400">
+                      {String(book.ratings) === '1'
+                        ? `${String(book.ratings)} avaliação`
+                        : `${String(book.ratings)} avaliações`}{' '}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <RatingStars
-                    size={20}
-                    rating={book.avgRating}
-                    className="mt-auto"
-                  />
-                  <span className="text-sm text-gray-400">
-                    {String(book.ratings) === '1'
-                      ? `${String(book.ratings)} avaliação`
-                      : `${String(book.ratings)} avaliações`}{' '}
-                  </span>
-                </div>
-              </div>
-            </section>
+              </section>
 
-            <section className="mt-10 border-t border-solid border-gray-600 py-6 flex justify-between">
-              <div className="flex w-full items-center gap-2">
-                <Bookmark className="text-green-100" />
-                <div>
-                  <span className="text-gray-300 text-sm">Categoria</span>
-                  <h3 className="text-base font-bold">{categories}</h3>
+              <section className="mt-10 border-t border-solid border-gray-600 py-6 flex justify-between">
+                <div className="flex w-full items-center gap-2">
+                  <Bookmark className="text-green-100" />
+                  <div>
+                    <span className="text-gray-300 text-sm">Categoria</span>
+                    <h3 className="text-base font-bold">{categories}</h3>
+                  </div>
                 </div>
-              </div>
-              <div className="flex w-full items-center gap-2">
-                <BookOpen className="text-green-100" />
-                <div>
-                  <span className="text-gray-300 text-sm">Páginas</span>
-                  <h3 className="text-base font-bold">
-                    {String(book.total_pages)}
-                  </h3>
+                <div className="flex w-full items-center gap-2">
+                  <BookOpen className="text-green-100" />
+                  <div>
+                    <span className="text-gray-300 text-sm">Páginas</span>
+                    <h3 className="text-base font-bold">
+                      {String(book.total_pages)}
+                    </h3>
+                  </div>
                 </div>
-              </div>
-            </section>
-          </main>
-        </SheetHeader>
+              </section>
+            </main>
+          </SheetHeader>
 
-        <section className="mt-10 ">
-          <main className="w-full flex flex-col gap-4">
-            <div className="flex w-full justify-between ">
-              <span>Avaliações</span>
-              <Button className="rounded text-purple-100 font-bold hover:bg-purple-100/10">
-                Avaliar
-              </Button>
-            </div>
-            {bookDetails?.ratings.map((rating) => (
-              <UserRatingCard key={rating.id} rating={rating} />
-            ))}
-          </main>
-        </section>
-      </SheetContent>
+          <section className="mt-10 ">
+            <main className="w-full flex flex-col gap-4">
+              <div className="flex w-full justify-between ">
+                <span>Avaliações</span>
+                {!showForm && (
+                  <Button
+                    onClick={() => setShowForm(!showForm)}
+                    className="rounded text-purple-100 font-bold hover:bg-purple-100/10"
+                  >
+                    Avaliar
+                  </Button>
+                )}
+              </div>
+              {showForm && (
+                <RatingForm
+                  bookId={bookDetails?.id}
+                  cancelShowForm={() => setShowForm(!showForm)}
+                />
+              )}
+              {bookDetails?.ratings.map((rating) => (
+                <UserRatingCard key={rating.id} rating={rating} />
+              ))}
+            </main>
+          </section>
+        </SheetContent>
+      )}
     </Sheet>
   )
 }
