@@ -1,10 +1,14 @@
+/* eslint-disable no-useless-return */
 import { RatingStars } from '@/components/common/rating-stars'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import { Check, User, X } from 'lucide-react'
+import { Check, Loader2, User, X } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
+import { createNewRate } from '../_actions/create-new-rate'
+import { toast } from 'sonner'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface RatingFormProps {
   cancelShowForm: () => void
@@ -16,8 +20,52 @@ export const RatingForm = ({ cancelShowForm, bookId }: RatingFormProps) => {
 
   const [description, setDescription] = useState('')
   const [currentRate, setCurrentRate] = useState(0)
+  const [loading, setLoading] = useState(false)
+
+  const queryClient = useQueryClient()
+
+  const { mutateAsync: handleRate } = useMutation({
+    mutationFn: async () => {
+      setLoading(true)
+      const formData = {
+        description,
+        rate: currentRate,
+        bookId,
+        userId: String(session?.user.id),
+      }
+      try {
+        const response = await createNewRate(formData)
+        if (response.message) {
+          return toast(response.message)
+        }
+
+        if (response.error) {
+          return toast(response.error)
+        }
+      } catch (e) {
+        console.error(e)
+      } finally {
+        setLoading(false)
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['book', bookId] })
+      queryClient.invalidateQueries({ queryKey: ['books'] })
+      cancelShowForm()
+    },
+  })
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault()
+    if (!description || !currentRate) return
+    await handleRate()
+  }
+
   return (
-    <form className="w-full bg-gray-700 p-6 rounded-lg flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full bg-gray-700 p-6 rounded-lg flex flex-col gap-6"
+    >
       <section className="flex justify-between">
         <div className="flex items-center gap-3">
           <Avatar>
@@ -60,9 +108,13 @@ export const RatingForm = ({ cancelShowForm, bookId }: RatingFormProps) => {
         <Button
           className="bg-gray-600 p-2 rounded hover:bg-gray-500 disabled:cursor-not-allowed"
           type="submit"
-          disabled={!description || !currentRate}
+          disabled={!description || !currentRate || loading}
         >
-          <Check className="text-green-100" />
+          {loading ? (
+            <Loader2 className="h-5 w-5 text-green-100 animate-spin" />
+          ) : (
+            <Check className="text-green-100" />
+          )}
         </Button>
       </div>
     </form>

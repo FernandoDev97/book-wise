@@ -16,6 +16,6 @@ export const findCategoriesBooks = async (selectedCategory: string | null) => {
     const data = response.json()
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
