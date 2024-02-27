@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/providers/auth'
+import ReactQueryProvider from '@/providers/react-query-provider'
+import { Toaster } from '@/components/ui/sonner'
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -23,7 +25,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <AuthProvider>
-        <body className={nunito?.variable}>{children}</body>
+        <body className={nunito?.variable}>
+          <ReactQueryProvider>
+            <div>{children}</div>
+          </ReactQueryProvider>
+          <Toaster />
+        </body>
       </AuthProvider>
     </html>
   )
