@@ -8,9 +8,13 @@ import { useRouter } from 'next/navigation'
 
 type AuthButtonsProps = {
   callbackUrl?: string
+  isModalLogin?: boolean
 }
 
-export const AuthButtons = ({ callbackUrl = '/' }: AuthButtonsProps) => {
+export const AuthButtons = ({
+  callbackUrl = '/',
+  isModalLogin = false,
+}: AuthButtonsProps) => {
   const { status, data } = useSession()
   const router = useRouter()
 
@@ -40,16 +44,18 @@ export const AuthButtons = ({ callbackUrl = '/' }: AuthButtonsProps) => {
         <img src="/images/githubLogo.svg" alt="Github logo" />
         Entrar com o GitHub
       </Button>
-      <Button
-        onClick={() => handleSignIn()}
-        className="bg-gray-600 rounded-lg flex gap-4 text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
-      >
-        <img
-          src="/images/visitorLogo.svg"
-          alt="Visitante logo (icone de uma foguete)"
-        />
-        Acessar como visitante
-      </Button>
+      {!isModalLogin && (
+        <Button
+          onClick={() => handleSignIn()}
+          className="bg-gray-600 rounded-lg flex gap-4 text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
+        >
+          <img
+            src="/images/visitorLogo.svg"
+            alt="Visitante logo (icone de uma foguete)"
+          />
+          Acessar como visitante
+        </Button>
+      )}
     </section>
   )
 }
