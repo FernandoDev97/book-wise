@@ -55,7 +55,7 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
       </div>
 
       <div className="flex gap-5">
-        <Link href={`/explore?book=${rating.book.id}`}>
+        <Link href={`/explore?bookId=${rating.book.id}`}>
           <Image
             className="rounded min-w-[108px] h-[152px] object-cover transition-all hover:brightness-125"
             width={108}
