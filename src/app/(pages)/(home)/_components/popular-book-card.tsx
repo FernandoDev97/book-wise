@@ -10,7 +10,7 @@ interface PopularBookCardProps {
 export const PopularBookCard = ({ book }: PopularBookCardProps) => {
   return (
     <Link
-      href={`/explore?book=${book.id}`}
+      href={`/explore?bookId=${book.id}`}
       className="w-full h-[130px] bg-gray-700 rounded-lg px-5 py-4 flex mb-2 border border-gray-700 transition hover:border-gray-600 "
     >
       <div className="flex gap-5">

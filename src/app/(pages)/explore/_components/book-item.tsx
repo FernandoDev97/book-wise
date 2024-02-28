@@ -10,13 +10,16 @@ import {
 } from '@/components/ui/sheet'
 import { BookOpen, Bookmark } from 'lucide-react'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UserRatingCard } from './user-rating-card'
 import { getBookDetails } from '../_actions/get-book-details'
 import { CategoriesOnBooks, Category } from '@prisma/client'
 import { RatingForm } from './rating-form'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import { LoginModal } from './login-modal'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 type BookDetails = BookWithAvgRating & {
   ratings: RatingWithAuthor[]
@@ -27,12 +30,15 @@ type BookDetails = BookWithAvgRating & {
 
 interface BookItemProps {
   currentBook: BookWithAvgRating
+  bookId?: string
 }
 
-export const BookItem = ({ currentBook }: BookItemProps) => {
+export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
   const [open, setOpen] = useState(false)
   const [showForm, setShowForm] = useState(false)
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const isAuthenticate = status === 'authenticated'
 
   const { data: bookDetails } = useQuery<BookDetails>({
     queryKey: ['book', currentBook.id],
@@ -42,8 +48,13 @@ export const BookItem = ({ currentBook }: BookItemProps) => {
 
       return book
     },
-    enabled: open,
   })
+
+  useEffect(() => {
+    if (bookId === currentBook.id) {
+      setOpen(true)
+    }
+  }, [bookId, currentBook.id])
 
   const categories = bookDetails?.categories
     .map((item) => item.category.name)
@@ -59,10 +70,23 @@ export const BookItem = ({ currentBook }: BookItemProps) => {
     (item) => item.user_id !== session?.user.id,
   )
 
+  const onOpenChange = (open: boolean) => {
+    if (open) {
+      router.replace(`/explore?bookId=${bookId}`)
+    } else {
+      router.replace('/explore')
+    }
+
+    setOpen(open)
+  }
+
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
-        <button className="w-full overflow-hidden relative bg-gray-700 py-4 px-5 rounded-lg h-auto flex gap-5">
+        <Link
+          href={`/explore?bookId=${currentBook.id}`}
+          className="w-full overflow-hidden relative bg-gray-700 py-4 px-5 rounded-lg h-auto flex gap-5"
+        >
           {currentBook.alreadyRead && (
             <div className="absolute uppercase rounded-l-sm top-0 text-green-100 font-bold text-xs right-0 px-3 py-1 bg-[#0a313c]">
               <span>Lido</span>
@@ -88,7 +112,7 @@ export const BookItem = ({ currentBook }: BookItemProps) => {
 
             <RatingStars rating={currentBook.avgRating} className="mt-auto" />
           </div>
-        </button>
+        </Link>
       </SheetTrigger>
       {bookDetails && (
         <SheetContent className="bg-gray-800 border-none min-w-[660px] overflow-auto no-scrollbar">
@@ -153,7 +177,7 @@ export const BookItem = ({ currentBook }: BookItemProps) => {
             <main className="w-full flex flex-col gap-4">
               <div className="flex w-full justify-between ">
                 <span>Avaliações</span>
-                {!showForm && canRate && (
+                {!showForm && canRate && isAuthenticate && (
                   <Button
                     onClick={() => setShowForm(!showForm)}
                     className="rounded text-purple-100 font-bold hover:bg-purple-100/10"
@@ -161,6 +185,7 @@ export const BookItem = ({ currentBook }: BookItemProps) => {
                     Avaliar
                   </Button>
                 )}
+                {!isAuthenticate && <LoginModal bookId={bookId} />}
               </div>
               {showForm && (
                 <RatingForm
