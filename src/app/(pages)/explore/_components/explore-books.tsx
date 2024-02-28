@@ -9,28 +9,44 @@ import { BookWithAvgRating } from '@/@types/types-prisma'
 import { PageTitle } from '@/components/common/page-title'
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { useQuery } from '@tanstack/react-query'
 
 interface ExploreBooksProps {
   books: BookWithAvgRating[]
   categories: Category[]
+  bookId?: string
 }
 
-export const ExploreBooks = ({ books, categories }: ExploreBooksProps) => {
+export const ExploreBooks = ({
+  books,
+  categories,
+  bookId,
+}: ExploreBooksProps) => {
   const [isActive, setIsActive] = useState<string | null>(null)
+  const [search, setSearch] = useState('')
   const [booksWithAvgRating, setBooksWithAvgRating] =
     useState<BookWithAvgRating[]>(books)
-  const [search, setSearch] = useState('')
+
+  const { data: booksFiltered } = useQuery<BookWithAvgRating[]>({
+    queryKey: ['books', isActive],
+    queryFn: async () => {
+      const data = await findCategoriesBooks(isActive)
+      const { books } = data
+      return books
+    },
+  })
 
   useEffect(() => {
-    async function handleCategoriesBooks() {
-      const { books } = await findCategoriesBooks(isActive)
-      setBooksWithAvgRating(books)
+    function handleBooksFiltered() {
+      if (booksFiltered) {
+        setBooksWithAvgRating(booksFiltered)
+      }
     }
 
-    handleCategoriesBooks()
-  }, [isActive])
+    handleBooksFiltered()
+  }, [booksFiltered])
 
-  const filteredBooks = booksWithAvgRating.filter((book) => {
+  const filteredBooks = booksWithAvgRating?.filter((book) => {
     return (
       book.name.toLowerCase().includes(search.toLowerCase()) ||
       book.author.toLowerCase().includes(search.toLowerCase())
@@ -71,8 +87,8 @@ export const ExploreBooks = ({ books, categories }: ExploreBooksProps) => {
           ))}
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-          {filteredBooks.map((book) => (
-            <BookItem key={book.id} currentBook={book} />
+          {filteredBooks?.map((book) => (
+            <BookItem bookId={bookId} key={book.id} currentBook={book} />
           ))}
         </div>
       </div>
