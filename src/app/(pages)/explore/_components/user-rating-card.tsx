@@ -19,7 +19,9 @@ export const UserRatingCard = ({ rating }: UserRatingCardProps) => {
   const isOwner = session?.user.id === rating.user_id
 
   return (
-    <section className="w-full p-6 bg-gray-700 rounded-lg flex flex-col gap-5">
+    <section
+      className={`w-full p-6 rounded-lg flex flex-col gap-5 ${isOwner ? `bg-gray-600` : `bg-gray-700`}`}
+    >
       <div className="flex justify-between items-start">
         <div className="flex gap-4">
           <Link href={`/profile/${rating.user_id}`}>
