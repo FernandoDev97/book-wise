@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth'
 import React from 'react'
 import { ButtonBack } from './_components/button-back'
 import { Input } from '@/components/ui/input'
-import { Search } from 'lucide-react'
+import { Search, User } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { getProfile } from './_actions/get-profile'
 import { Rating } from '@prisma/client'
@@ -21,7 +21,7 @@ interface ProfileDataTypes {
     ratings: Rating[]
     readPages: number
     ratedBooks: number
-    readAuthors: number
+    readAuthor: number
     mostReadCategory?: string
   }
 }
@@ -33,11 +33,10 @@ interface ProfilePageProps {
 }
 
 const ProfilePage = async ({ params }: ProfilePageProps) => {
-  const { profile } = await getProfile(params?.id as string)
-
+  const { profile }: ProfileDataTypes = await getProfile(params?.id as string)
   const session = await getServerSession(options)
 
-  if (!params.id) {
+  if (params.id !== profile.user.id) {
     redirect('/')
   }
 
@@ -68,13 +67,15 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
               className="object-cover"
               width={72}
               height={72}
-              src={profile?.user?.image ?? ''}
-              alt={`Foto do perfil de ${profile?.user?.name ?? ''}`}
+              src={profile?.user?.image}
+              alt={`Foto do perfil de ${profile?.user?.name}`}
             />
-            <AvatarFallback />
+            <AvatarFallback>
+              <User size={72} />
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-0.5 items-center">
-            <p className="text-xl font-bold ">{profile?.user?.name ?? ''}</p>
+            <p className="text-xl font-bold ">{profile?.user?.name}</p>
             <p className="text-sm text-gray-400">membro desde 2019</p>
           </div>
         </section>

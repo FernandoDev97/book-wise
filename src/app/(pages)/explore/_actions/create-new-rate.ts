@@ -17,7 +17,10 @@ export const createNewRate = async (formData: CreateNewRateData) => {
     })
 
     const data = await response.json()
-    revalidatePath('/')
+    if (data) {
+      revalidatePath('/(pages)/(home)', 'page')
+      revalidatePath('/(pages)/profile/[id]', 'page')
+    }
     return data
   } catch (error) {
     console.error(error)
