@@ -54,7 +54,7 @@ export const ExploreBooks = ({
   })
 
   return (
-    <div className="w-full flex flex-col justify-start gap-12">
+    <div className="w-full flex flex-col justify-start gap-12 h-full overflow-hidden pb-14">
       <div className="grid grid-cols-2">
         <PageTitle title="Explorar" />
         <form className="w-full relative focus-within:border-green-200 focus-within:text-green-200 border border-gray-500 rounded transition-all">
@@ -70,8 +70,8 @@ export const ExploreBooks = ({
           />
         </form>
       </div>
-      <div className="flex flex-col w-full gap-12">
-        <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-col w-full gap-12 h-full overflow-hidden">
+        <div className="flex gap-3 flex-wrap py-2">
           <BooksFilter
             isActive={isActive === null}
             onClick={() => setIsActive(null)}
@@ -86,7 +86,7 @@ export const ExploreBooks = ({
             />
           ))}
         </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 overflow-auto no-scrollbar ">
           {filteredBooks?.map((book) => (
             <BookItem bookId={bookId} key={book.id} currentBook={book} />
           ))}

@@ -85,7 +85,7 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
       <SheetTrigger asChild>
         <Link
           href={`/explore?bookId=${currentBook.id}`}
-          className="w-full overflow-hidden relative bg-gray-700 py-4 px-5 rounded-lg h-auto flex gap-5"
+          className="w-full h-full relative bg-gray-700 py-4 px-5 rounded-lg flex gap-5"
         >
           {currentBook.alreadyRead && (
             <div className="absolute uppercase rounded-l-sm top-0 text-green-100 font-bold text-xs right-0 px-3 py-1 bg-[#0a313c]">
@@ -100,7 +100,7 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
             sizes="100vh"
             className="object-cover w-[108px] h-[152px]"
           />
-          <div className="flex flex-col h-full justify-between">
+          <div className="flex flex-col h-full justify-between ">
             <div className="flex flex-col">
               <p className="text-base font-bold overflow-hidden text-start text-ellipsis line-clamp-2">
                 {currentBook?.name}
