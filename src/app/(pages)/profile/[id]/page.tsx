@@ -1,13 +1,30 @@
 import { options } from '@/app/api/auth/[...nextauth]/options'
 import { PageTitle } from '@/components/common/page-title'
-import { prismaClient } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import React from 'react'
 import { ButtonBack } from './_components/button-back'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
-import { redirect } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { getProfile } from './_actions/get-profile'
+import { Rating } from '@prisma/client'
+import { redirect } from 'next/navigation'
+
+interface ProfileDataTypes {
+  profile: {
+    user: {
+      id: string
+      image: string
+      name: string
+      member_since: string
+    }
+    ratings: Rating[]
+    readPages: number
+    ratedBooks: number
+    readAuthors: number
+    mostReadCategory?: string
+  }
+}
 
 interface ProfilePageProps {
   params: {
@@ -16,23 +33,19 @@ interface ProfilePageProps {
 }
 
 const ProfilePage = async ({ params }: ProfilePageProps) => {
-  const user = await prismaClient.user.findFirst({
-    where: {
-      id: params.id,
-    },
-  })
+  const { profile } = await getProfile(params?.id as string)
 
   const session = await getServerSession(options)
 
-  if (!user) {
-    return redirect('/')
+  if (!params.id) {
+    redirect('/')
   }
 
   return (
     <main className="w-full h-full ">
       <div className="grid grid-cols-3 pr-3 xl:pr-0 w-full h-full gap-16 ">
         <section className="col-span-2 w-full overflow-auto no-scrollbar pb-5 flex flex-col gap-11">
-          {user?.id === session?.user.id ? (
+          {params.id === session?.user.id ? (
             <PageTitle title="Perfil" />
           ) : (
             <ButtonBack />
@@ -55,13 +68,13 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
               className="object-cover"
               width={72}
               height={72}
-              src={user?.image as string}
-              alt={`Foto do perfil de ${user.name}`}
+              src={profile?.user?.image ?? ''}
+              alt={`Foto do perfil de ${profile?.user?.name ?? ''}`}
             />
             <AvatarFallback />
           </Avatar>
           <div className="flex flex-col gap-0.5 items-center">
-            <p className="text-xl font-bold ">{user.name}</p>
+            <p className="text-xl font-bold ">{profile?.user?.name ?? ''}</p>
             <p className="text-sm text-gray-400">membro desde 2019</p>
           </div>
         </section>
