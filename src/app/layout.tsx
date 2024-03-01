@@ -26,9 +26,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <AuthProvider>
         <body className={nunito?.variable}>
-          <ReactQueryProvider>
-            <div>{children}</div>
-          </ReactQueryProvider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
           <Toaster />
         </body>
       </AuthProvider>
