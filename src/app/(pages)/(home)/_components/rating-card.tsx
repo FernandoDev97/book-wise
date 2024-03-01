@@ -32,7 +32,7 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
   return (
     <div className="w-full flex flex-col bg-gray-700 p-6 rounded-lg">
       <div className="flex items-start justify-between mb-8">
-        <section className="flex gap-2 items-center ">
+        <div className="flex gap-2 items-center ">
           <Link href={`/profile/${rating.user_id}`}>
             <Avatar>
               <AvatarImage
@@ -50,7 +50,7 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
             </Link>
             <span className="text-gray-400 text-sm capitalize">{distance}</span>
           </div>
-        </section>
+        </div>
         <RatingStars size={16} rating={rating.rate} />
       </div>
 
@@ -72,7 +72,7 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
             <p className="text-gray-400 text-sm">{rating.book.author}</p>
           </div>
 
-          <p className="text-sm font-bold text-gray-300">
+          <div className="text-sm font-bold text-gray-300">
             {bookSummary}
             {rating.book.summary.length > MAX_SUMMARY_LENGTH && (
               <Button
@@ -82,7 +82,7 @@ export const RatingCard = ({ rating }: RatingCardProps) => {
                 {isShowingMore ? 'ver menos' : 'ver mais'}
               </Button>
             )}
-          </p>
+          </div>
         </div>
       </div>
     </div>
