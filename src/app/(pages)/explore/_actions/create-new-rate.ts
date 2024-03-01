@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 interface CreateNewRateData {
   description: string
   rate: number
@@ -15,6 +17,7 @@ export const createNewRate = async (formData: CreateNewRateData) => {
     })
 
     const data = await response.json()
+    revalidatePath('/')
     return data
   } catch (error) {
     console.error(error)
