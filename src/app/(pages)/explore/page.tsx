@@ -16,8 +16,8 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
   ])
 
   return (
-    <main className="w-full h-full flex flex-col pr-5 overflow-auto pb-5 no-scrollbar">
-      <section className="mt-10 flex gap-3 w-full">
+    <main className="w-full h-full flex flex-col pr-5 ">
+      <section className="mt-10 flex gap-3 w-full h-full">
         <ExploreBooks
           bookId={searchParams.bookId}
           books={books}
