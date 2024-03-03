@@ -3,7 +3,7 @@
 import { Category } from '@prisma/client'
 import { BookItem } from './book-item'
 import { BooksFilter } from './books-filter'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { findCategoriesBooks } from '@/app/(pages)/explore/_actions/find-categories-books'
 import { BookWithAvgRating } from '@/@types/types-prisma'
 import { PageTitle } from '@/components/common/page-title'
@@ -46,15 +46,17 @@ export const ExploreBooks = ({
     handleBooksFiltered()
   }, [booksFiltered])
 
-  const filteredBooks = booksWithAvgRating?.filter((book) => {
-    return (
-      book.name.toLowerCase().includes(search.toLowerCase()) ||
-      book.author.toLowerCase().includes(search.toLowerCase())
-    )
-  })
+  const filteredBooks = useMemo(() => {
+    return booksWithAvgRating.filter((book) => {
+      return (
+        book.name.toLowerCase().includes(search.toLowerCase()) ||
+        book.author.toLowerCase().includes(search.toLowerCase())
+      )
+    })
+  }, [booksWithAvgRating, search])
 
   return (
-    <div className="w-full flex flex-col justify-start gap-12 h-full overflow-hidden pb-14">
+    <div className="w-full flex flex-col justify-start gap-12 h-full overflow-hidden pb-5">
       <div className="grid grid-cols-2">
         <PageTitle title="Explorar" />
         <form className="w-full relative focus-within:border-green-200 focus-within:text-green-200 border border-gray-500 rounded transition-all">
@@ -86,6 +88,11 @@ export const ExploreBooks = ({
             />
           ))}
         </div>
+        {!filteredBooks.length && (
+          <p className="text-gray-400 text-lg text-center">
+            Nenhum livro ou author encontado com o nome de &quot;{search}&quot;
+          </p>
+        )}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 overflow-auto no-scrollbar ">
           {filteredBooks?.map((book) => (
             <BookItem bookId={bookId} key={book.id} currentBook={book} />

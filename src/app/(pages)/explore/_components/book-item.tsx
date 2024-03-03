@@ -85,7 +85,7 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
       <SheetTrigger asChild>
         <Link
           href={`/explore?bookId=${currentBook.id}`}
-          className="w-full h-full relative bg-gray-700 py-4 px-5 rounded-lg flex gap-5"
+          className="w-full h-full relative bg-gray-700 border border-solid border-gray-700 hover:border-gray-600 transition-all py-4 px-5 rounded-lg flex gap-5"
         >
           {currentBook.alreadyRead && (
             <div className="absolute uppercase rounded-l-sm top-0 text-green-100 font-bold text-xs right-0 px-3 py-1 bg-[#0a313c]">

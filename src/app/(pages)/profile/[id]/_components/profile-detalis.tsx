@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import dayjs from 'dayjs'
 import { ProfileDataTypes } from '../page'
+import { ProfileDetailsInfos } from './profile-details-infos'
 
 export const ProfileDetalis = ({ profile }: ProfileDataTypes) => {
   const { user } = profile
@@ -31,50 +32,36 @@ export const ProfileDetalis = ({ profile }: ProfileDataTypes) => {
         <p className="text-sm text-gray-400">membro desde {memberSince}</p>
       </div>
 
+      <div className="w-8 h-1 rounded-full bg-gradient-to-r from-[#7FD1CC] to-[#9694F5] my-8" />
+
       <div className="flex flex-col gap-10">
-        <div className="flex gap-5 items-center">
-          <BookOpen size={32} className="text-green-100" />
-          <div className="flex flex-col gap-1">
-            <p className="text-base font-bold text-gray-200">
-              {profile.readPages}
-            </p>
-            <p className="text-sm text-gray-300">Páginas lidas</p>
-          </div>
-        </div>
+        <ProfileDetailsInfos
+          icon={<BookOpen size={32} className="text-green-100" />}
+          details={profile.readPages}
+          description="Páginas lidas"
+        />
 
-        <div className="flex gap-5 items-center">
-          <LibraryBig size={32} className="text-green-100" />
-          <div className="flex flex-col gap-1">
-            <p className="text-base font-bold text-gray-200">
-              {profile.ratedBooks}
-            </p>
-            <p className="text-sm text-gray-300">
-              {profile.ratedBooks === 1 ? `Livro avaliado` : `Livros avaliados`}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex gap-5 items-center">
-          <UserRoundCheck size={32} className="text-green-100" />
-          <div className="flex flex-col gap-1">
-            <p className="text-base font-bold text-gray-200">
-              {profile.readAuthors}
-            </p>
-            <p className="text-sm text-gray-300">
-              {profile.readAuthors === 1 ? `Autor lido` : `Autores lidos`}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex gap-5 items-center">
-          <Bookmark size={32} className="text-green-100" />
-          <div className="flex flex-col gap-1">
-            <p className="text-base font-bold text-gray-200">
-              {profile.mostReadCategory}
-            </p>
-            <p className="text-sm text-gray-300">Categoria mais lida</p>
-          </div>
-        </div>
+        <ProfileDetailsInfos
+          icon={<LibraryBig size={32} className="text-green-100" />}
+          details={profile.ratedBooks}
+          description={
+            profile.ratedBooks === 1 ? `Livro avaliado` : `Livros avaliados`
+          }
+        />
+        <ProfileDetailsInfos
+          icon={<UserRoundCheck size={32} className="text-green-100" />}
+          details={profile.readAuthors}
+          description={
+            profile.readAuthors === 1 ? `Autor lido` : `Autores lidos`
+          }
+        />
+        {profile.mostReadCategory && (
+          <ProfileDetailsInfos
+            icon={<Bookmark size={32} className="text-green-100" />}
+            details={profile.mostReadCategory}
+            description="Categoria mais lida"
+          />
+        )}
       </div>
     </section>
   )
