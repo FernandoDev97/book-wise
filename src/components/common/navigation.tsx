@@ -45,14 +45,14 @@ export const Navigation = () => {
   }, [data])
 
   return (
-    <div className="flex justify-between items-center w-full h-full">
-      <nav className="flex justify-center lg:justify-start flex-row lg:flex-col gap-7 w-full h-full ">
+    <div className="flex flex-col gap-8 justify-between lg:items-center w-full h-full">
+      <nav className="flex justify-start flex-col gap-10 lg:gap-7 w-full h-full ">
         {navItems.map((item) => (
           <Link
             className={
               path === item.href
-                ? 'flex items-center text-gray-100 transition-colors gap-3 text-xs lg:text-base'
-                : 'flex items-center text-gray-400 transition-colors gap-3 text-xs lg:text-base hover:text-gray-100'
+                ? 'flex items-center text-gray-100 transition-colors gap-3 text-base'
+                : 'flex items-center text-gray-400 transition-colors gap-3 text-base hover:text-gray-100'
             }
             href={item.href}
             key={item.label}
@@ -64,7 +64,6 @@ export const Navigation = () => {
             {item.label}
           </Link>
         ))}
-        <div></div>
 
         <div className="hidden lg:block lg:mt-auto w-full">
           {status === 'authenticated' && (
@@ -96,8 +95,6 @@ export const Navigation = () => {
           )}
         </div>
       </nav>
-
-      <div>teste</div>
     </div>
   )
 }
