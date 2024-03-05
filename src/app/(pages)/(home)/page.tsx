@@ -19,9 +19,9 @@ const Home = async () => {
   ])
 
   return (
-    <main className="w-full h-full ">
-      <div className="grid grid-cols-1 lg:grid-cols-3 pr-3 xl:pr-0 w-full h-full gap-16 ">
-        <section className="col-span-2 w-full overflow-auto no-scrollbar pb-5 flex flex-col gap-11">
+    <main className="w-full h-full px-3">
+      <div className="lg:grid lg:grid-cols-3 w-full h-full lg:gap-16 ">
+        <section className="col-span-2 w-full lg:overflow-auto lg:no-scrollbar pb-5 flex flex-col gap-11">
           <PageTitle title="Início" />
           {session && rating && (
             <LatestRatingCard userId={userId as string} rating={rating} />
@@ -29,7 +29,7 @@ const Home = async () => {
           <RecentRatings recentRatings={ratings ?? []} />
         </section>
 
-        <section className="hidden col-span-1 lg:flex flex-col mt-20">
+        <section className="col-span-1 lg:flex flex-col pb-3 lg:pb-0 lg:mt-20">
           <PopularBooks popularBooks={books ?? []} />
         </section>
       </div>

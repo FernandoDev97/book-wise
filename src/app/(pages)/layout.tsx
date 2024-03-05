@@ -7,7 +7,7 @@ export default async function PagesLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="main-layout-pages overflow-hidden">
+    <main className="main-layout-pages lg:overflow-hidden">
       <Header />
       <Sidebar />
       <div className="w-full h-[100vh] max-w-[996px] mx-auto lg:pt-[72px]">

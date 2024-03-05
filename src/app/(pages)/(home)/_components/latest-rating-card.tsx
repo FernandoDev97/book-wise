@@ -20,7 +20,7 @@ export const LatestRatingCard = ({ rating, userId }: LatestRatingCardProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <span>Sua última leitura</span>
+        <span className="text-sm">Sua última leitura</span>
         <Link
           href={`/profile/${userId}`}
           className="flex hover:bg-[#8381D90F] py-2 px-3 transition-all rounded items-center text-sm font-bold text-purple-100"
@@ -41,13 +41,15 @@ export const LatestRatingCard = ({ rating, userId }: LatestRatingCardProps) => {
           />
         </Link>
         <div className="w-full flex flex-col gap-3">
-          <div className="w-full flex justify-between">
+          <div className="w-full flex flex-col gap-1 md:gap-0 md:flex-row md:justify-between">
             <span className="text-gray-300 text-sm">{distance}</span>
             <RatingStars size={16} rating={rating.rate} />
           </div>
 
           <div className="flex flex-col gap-1">
-            <h2 className="font-bold text-base">{rating.book.name}</h2>
+            <h2 className="font-bold text-sm md:text-base">
+              {rating.book.name}
+            </h2>
             <h3 className="text-gray-400 text-sm">{rating.book.author}</h3>
           </div>
 

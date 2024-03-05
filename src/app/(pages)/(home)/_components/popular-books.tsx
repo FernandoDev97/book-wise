@@ -21,12 +21,14 @@ export const PopularBooks = ({ popularBooks }: PopularBooksProps) => {
           <ChevronRight size={16} />
         </Link>
       </div>
-      {popularBooks.map((popularBook) => (
-        <PopularBookCard
-          key={`popular-book-card-${popularBook.id}`}
-          book={popularBook}
-        />
-      ))}
+      <div className="flex gap-3 overflow-auto lg:flex-col lg:gap-1">
+        {popularBooks.map((popularBook) => (
+          <PopularBookCard
+            key={`popular-book-card-${popularBook.id}`}
+            book={popularBook}
+          />
+        ))}
+      </div>
     </section>
   )
 }
