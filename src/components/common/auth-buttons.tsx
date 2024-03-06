@@ -32,14 +32,14 @@ export const AuthButtons = ({
     <section className="w-full flex flex-col gap-4 mt-6">
       <Button
         onClick={() => handleSignIn('google')}
-        className="bg-gray-600 rounded-lg flex gap-4 text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
+        className="bg-gray-600 rounded-lg flex gap-4 text-sm md:text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
       >
         <img src="/images/googleLogo.svg" alt="Google logo" />
         Entrar com o Google
       </Button>
       <Button
         onClick={() => handleSignIn('github')}
-        className="bg-gray-600 rounded-lg flex gap-4 text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
+        className="bg-gray-600 rounded-lg flex gap-4 text-sm md:text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
       >
         <img src="/images/githubLogo.svg" alt="Github logo" />
         Entrar com o GitHub
@@ -47,7 +47,7 @@ export const AuthButtons = ({
       {!isModalLogin && (
         <Button
           onClick={() => handleSignIn()}
-          className="bg-gray-600 rounded-lg flex gap-4 text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
+          className="bg-gray-600 rounded-lg flex gap-4 text-sm md:text-lg text-gray-200 justify-start w-full px-6 h-[4.5rem]"
         >
           <img
             src="/images/visitorLogo.svg"

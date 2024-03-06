@@ -11,7 +11,7 @@ export const RecentRatings = ({ recentRatings }: RecentRatingsProps) => {
     <div className="flex flex-col gap-4">
       <p className="text-sm">Avaliações mais recentes</p>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex overflow-auto no-scrollbar lg:flex-col gap-3">
         {recentRatings.map((recentRating) => (
           <RatingCard key={recentRating.id} rating={recentRating} />
         ))}
