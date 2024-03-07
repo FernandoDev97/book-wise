@@ -56,8 +56,8 @@ export const ExploreBooks = ({
   }, [booksWithAvgRating, search])
 
   return (
-    <div className="w-full flex flex-col justify-start gap-12 h-full overflow-hidden pb-5">
-      <div className="grid grid-cols-2">
+    <div className="w-full flex flex-col justify-start gap-9 lg:gap-12 h-full overflow-hidden pb-5">
+      <div className="flex flex-col gap-10 md:gap-0 md:grid md:grid-cols-2">
         <PageTitle title="Explorar" />
         <form className="w-full relative focus-within:border-green-200 focus-within:text-green-200 border border-gray-500 rounded transition-all">
           <Input
@@ -72,8 +72,23 @@ export const ExploreBooks = ({
           />
         </form>
       </div>
-      <div className="flex flex-col w-full gap-12 h-full overflow-hidden">
-        <div className="flex gap-3 flex-wrap py-2">
+      <div className="flex flex-col w-full gap-8 lg:gap-12 h-full overflow-hidden">
+        <div className="flex gap-3 py-6 overflow-x-scroll overflow-y-hidden no-scrollbar lg:hidden">
+          <BooksFilter
+            isActive={isActive === null}
+            onClick={() => setIsActive(null)}
+            tag="Tudo"
+          />
+          {categories.map((category) => (
+            <BooksFilter
+              isActive={isActive === category.id}
+              key={category.id}
+              category={category}
+              onClick={() => setIsActive(category.id)}
+            />
+          ))}
+        </div>
+        <div className="hidden lg:flex flex-wrap gap-3 ">
           <BooksFilter
             isActive={isActive === null}
             onClick={() => setIsActive(null)}

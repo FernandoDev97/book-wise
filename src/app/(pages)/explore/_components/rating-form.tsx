@@ -66,11 +66,11 @@ export const RatingForm = ({ cancelShowForm, bookId }: RatingFormProps) => {
       onSubmit={handleSubmit}
       className="w-full bg-gray-700 p-6 rounded-lg flex flex-col gap-6"
     >
-      <section className="flex justify-between">
+      <section className="flex flex-wrap gap-3 justify-between">
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage
-              className="rounded-full w-10 h-10"
+              className="rounded-full w-8 h-8 md:w-10 md:h-10"
               src={session?.user.image}
               alt={session?.user.name}
             />
@@ -78,13 +78,13 @@ export const RatingForm = ({ cancelShowForm, bookId }: RatingFormProps) => {
               <User />
             </AvatarFallback>
           </Avatar>
-          <span className="text-gray-100 font-bold text-base">
+          <span className="text-gray-100 font-bold text-sm md:text-base">
             {session?.user.name}
           </span>
         </div>
 
         <RatingStars
-          className="cursor-pointer"
+          className="cursor-pointer "
           rating={currentRate}
           size={24}
           setRating={setCurrentRate}

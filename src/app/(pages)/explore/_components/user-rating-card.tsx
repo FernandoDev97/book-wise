@@ -20,7 +20,7 @@ export const UserRatingCard = ({ rating }: UserRatingCardProps) => {
 
   return (
     <section
-      className={`w-full p-6 rounded-lg flex flex-col gap-5 ${isOwner ? `bg-gray-600` : `bg-gray-700`}`}
+      className={`min-w-full md:w-full p-6 rounded-lg flex flex-col gap-5 ${isOwner ? `bg-gray-600` : `bg-gray-700`}`}
     >
       <div className="flex justify-between items-start">
         <div className="flex gap-4">

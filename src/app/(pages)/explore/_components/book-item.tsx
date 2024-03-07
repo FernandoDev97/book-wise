@@ -115,10 +115,10 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
         </Link>
       </SheetTrigger>
       {bookDetails && (
-        <SheetContent className="bg-gray-800 border-none min-w-[660px] overflow-auto no-scrollbar">
+        <SheetContent className="bg-gray-800 border-none min-w-[100%] md:min-w-[60%] lg:min-w-[660px] overflow-auto no-scrollbar">
           <SheetHeader>
-            <main className="w-full h-[415px] bg-gray-700 px-8 py-6 rounded-[10px] mt-6 flex flex-col">
-              <section className="w-full h-[242px] flex gap-8 ">
+            <main className="w-full h-auto lg:h-[415px] bg-gray-700 px-8 py-6 rounded-[10px] mt-6 flex flex-col">
+              <section className="w-full lg:h-[242px] flex flex-col lg:flex-row gap-8 ">
                 <Image
                   src={currentBook?.cover_url}
                   alt={currentBook?.name}
@@ -128,10 +128,12 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
                   className="object-cover h-full w-[172px]"
                 />
 
-                <div className="flex flex-col">
-                  <div className="h-full w-full">
+                <div className="flex flex-col items-start gap-3">
+                  <div className="h-full w-full flex flex-col items-start">
                     <SheetTitle asChild>
-                      <h2 className="text-lg font-bold">{bookDetails?.name}</h2>
+                      <h2 className="text-lg font-bold text-start">
+                        {bookDetails?.name}
+                      </h2>
                     </SheetTitle>
                     <h3 className="text-base font-normal">
                       {bookDetails?.author}
@@ -141,9 +143,9 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
                     <RatingStars
                       size={20}
                       rating={currentBook.avgRating}
-                      className="mt-auto"
+                      className="lg:mt-auto"
                     />
-                    <span className="text-sm text-gray-400">
+                    <span className="text-sm text-start text-gray-400">
                       {String(ratings?.length) === '1'
                         ? `${String(ratings?.length)} avaliação`
                         : `${String(ratings?.length)} avaliações`}{' '}
@@ -152,17 +154,17 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
                 </div>
               </section>
 
-              <section className="mt-10 border-t border-solid border-gray-600 py-6 flex justify-between">
+              <section className="mt-10 border-t border-solid border-gray-600 pt-8 md:py-6 flex flex-col gap-6 md:flex-row justify-between">
                 <div className="flex w-full items-center gap-2">
                   <Bookmark className="text-green-100" />
-                  <div>
+                  <div className="flex flex-col items-start">
                     <span className="text-gray-300 text-sm">Categoria</span>
                     <h3 className="text-base font-bold">{categories}</h3>
                   </div>
                 </div>
                 <div className="flex w-full items-center gap-2">
                   <BookOpen className="text-green-100" />
-                  <div>
+                  <div className="flex flex-col items-start">
                     <span className="text-gray-300 text-sm">Páginas</span>
                     <h3 className="text-base font-bold">
                       {String(currentBook.total_pages)}
@@ -193,9 +195,11 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
                   cancelShowForm={() => setShowForm(!showForm)}
                 />
               )}
-              {sortedRatingByDate?.map((rating) => (
-                <UserRatingCard key={rating.id} rating={rating} />
-              ))}
+              <div className="flex gap-3 overflow-auto md:flex-col no-scrollbar">
+                {sortedRatingByDate?.map((rating) => (
+                  <UserRatingCard key={rating.id} rating={rating} />
+                ))}
+              </div>
             </main>
           </section>
         </SheetContent>
