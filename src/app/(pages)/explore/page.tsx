@@ -2,6 +2,7 @@ import { ExploreBooks } from '@/app/(pages)/explore/_components/explore-books'
 import { prismaClient } from '@/lib/prisma'
 import React from 'react'
 import { findCategoriesBooks } from './_actions/find-categories-books'
+import { redirect } from 'next/navigation'
 
 interface ExplorePageProps {
   searchParams: {
@@ -14,6 +15,10 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
     await findCategoriesBooks(null),
     await prismaClient.category.findMany(),
   ])
+
+  if (!books) {
+    return redirect('/')
+  }
 
   return (
     <main className="w-full h-full flex flex-col px-3">
