@@ -40,19 +40,21 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   }
 
   return (
-    <main className="w-full h-full ">
-      <div className="grid grid-cols-3 pr-3 xl:pr-0 w-full h-full gap-16 ">
-        <section className="col-span-2 w-full overflow-auto no-scrollbar pb-5 flex flex-col gap-11">
+    <main className="w-full h-full px-3">
+      <div className="flex flex-col lg:grid lg:grid-cols-3 lg:pr-3 xl:pr-0 w-full h-full lg:gap-16 ">
+        <section className="col-span-2 w-full lg:overflow-auto no-scrollbar pb-5 flex flex-col lg:gap-11">
           {params.id === session?.user.id ? (
             <PageTitle title="Perfil" />
           ) : (
             <ButtonBack />
           )}
 
-          <RecentRatings ratings={profile.ratings} />
+          <RecentRatings profile={profile} ratings={profile.ratings} />
         </section>
 
-        <ProfileDetalis profile={profile} />
+        <div className="hidden lg:block">
+          <ProfileDetalis profile={profile} />
+        </div>
       </div>
     </main>
   )

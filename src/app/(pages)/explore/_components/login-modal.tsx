@@ -21,9 +21,9 @@ export const LoginModal = ({ bookId }: LoginModalProps) => {
           Avaliar
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex py-14 px-[72px] flex-col gap-6 justify-center items-center border-none bg-gray-700">
+      <DialogContent className="flex lg:py-14 rounded-lg lg:px-[72px] flex-col gap-3 lg:gap-6 justify-center items-center border-none bg-gray-700">
         <DialogHeader>
-          <DialogTitle className="text-center text-base font-bold text-gray-200">
+          <DialogTitle className="text-center mt-2 text-base font-bold text-gray-200">
             Faça login para deixar sua avaliação
           </DialogTitle>
         </DialogHeader>
