@@ -1,8 +1,17 @@
 'use server'
 
-export async function recentRatings() {
-  const response = await fetch(`${process.env.API_URL}/rating/latest`)
+import { prismaClient } from '@/lib/prisma'
 
-  const { ratings } = await response.json()
+export async function recentRatings() {
+  const ratings = await prismaClient.rating.findMany({
+    orderBy: {
+      created_at: 'desc',
+    },
+    include: {
+      user: true,
+      book: true,
+    },
+    take: 10,
+  })
   return ratings
 }

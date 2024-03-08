@@ -1,10 +1,46 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use server'
 
-export async function popularBooks(take?: string) {
-  const response = await fetch(
-    `${process.env.API_URL}/books/popular?` + new URLSearchParams(take),
-  )
+import { prismaClient } from '@/lib/prisma'
 
-  const { books } = await response.json()
-  return books
+export async function popularBooks(params?: string) {
+  const take = Number(params)
+  const books = await prismaClient.book.findMany({
+    orderBy: {
+      ratings: {
+        _count: 'desc',
+      },
+    },
+    include: {
+      ratings: true,
+    },
+    take: take || 4,
+  })
+
+  const booksAvgRating = await prismaClient.rating.groupBy({
+    by: ['book_id'],
+    where: {
+      book_id: {
+        in: books.map((book) => book.id),
+      },
+    },
+    _avg: {
+      rate: true,
+    },
+  })
+
+  const booksWithAvgRating = books.map((book) => {
+    const bookAvgRating = booksAvgRating.find(
+      (avgRating) => avgRating.book_id === book.id,
+    )
+    const { ratings, ...bookInfos } = book
+    return {
+      ...bookInfos,
+      avgRating: bookAvgRating?._avg.rate,
+    }
+  })
+
+  return {
+    books: booksWithAvgRating,
+  }
 }

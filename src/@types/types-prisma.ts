@@ -1,7 +1,7 @@
 import { Book, Rating, User } from '@prisma/client'
 
 export interface BookWithAvgRating extends Book {
-  avgRating: number
+  avgRating: number | null | undefined
   alreadyRead: boolean
   ratings: number
 }

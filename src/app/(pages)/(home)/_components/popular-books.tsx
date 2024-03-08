@@ -2,13 +2,21 @@ import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { PopularBookCard } from './popular-book-card'
-import { BookWithAvgRating } from '@/@types/types-prisma'
 
 interface PopularBooksProps {
-  popularBooks: BookWithAvgRating[]
+  books: {
+    avgRating: number | null | undefined
+    id: string
+    name: string
+    author: string
+    summary: string
+    cover_url: string
+    total_pages: number
+    created_at: Date
+  }[]
 }
 
-export const PopularBooks = ({ popularBooks }: PopularBooksProps) => {
+export const PopularBooks = ({ books }: PopularBooksProps) => {
   return (
     <section className="flex flex-col gap-1">
       <div className="flex justify-between items-center">
@@ -22,7 +30,7 @@ export const PopularBooks = ({ popularBooks }: PopularBooksProps) => {
         </Link>
       </div>
       <div className="flex gap-3 overflow-auto no-scrollbar lg:flex-col lg:gap-1">
-        {popularBooks.map((popularBook) => (
+        {books.map((popularBook) => (
           <PopularBookCard
             key={`popular-book-card-${popularBook.id}`}
             book={popularBook}

@@ -12,7 +12,7 @@ const Home = async () => {
   const session = await getServerSession(options)
   const userId = session?.user.id
 
-  const [ratings, books, { rating }] = await Promise.all([
+  const [ratings, { books }, rating] = await Promise.all([
     recentRatings(),
     popularBooks(),
     getUserLatestRating(String(userId)),
@@ -30,7 +30,7 @@ const Home = async () => {
         </section>
 
         <section className="col-span-1 lg:flex flex-col pb-3 lg:pb-0 lg:mt-20">
-          <PopularBooks popularBooks={books ?? []} />
+          <PopularBooks books={books} />
         </section>
       </div>
     </main>

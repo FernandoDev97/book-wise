@@ -1,21 +1,40 @@
 'use server'
 
+import { prismaClient } from '@/lib/prisma'
+
 export const getBookDetails = async (bookId: string) => {
-  const params = new URLSearchParams({
-    bookId,
+  const book = await prismaClient.book.findUnique({
+    where: { id: bookId },
+    include: {
+      categories: {
+        include: {
+          category: true,
+        },
+      },
+      ratings: {
+        include: {
+          user: true,
+        },
+      },
+    },
   })
 
-  try {
-    const response = await fetch(
-      `${process.env.API_URL}/books/details?${params}`,
-      {
-        method: 'GET',
-      },
-    )
+  const booksAvgRating = await prismaClient.rating.groupBy({
+    by: ['book_id'],
+    where: {
+      book_id: bookId,
+    },
+    _avg: {
+      rate: true,
+    },
+  })
 
-    const data = await response.json()
-    return data
-  } catch (error) {
-    console.error(error)
+  const bookWithAvgRating = {
+    ...book,
+    avgRating: booksAvgRating[0]._avg.rate ?? 0,
+  }
+
+  return {
+    book: bookWithAvgRating,
   }
 }

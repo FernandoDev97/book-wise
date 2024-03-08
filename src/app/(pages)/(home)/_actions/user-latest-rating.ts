@@ -1,23 +1,19 @@
 'use server'
 
+import { prismaClient } from '@/lib/prisma'
+
 export const getUserLatestRating = async (userId: string) => {
-  const params = new URLSearchParams({
-    userId,
+  const latestUserRating = await prismaClient.rating.findFirst({
+    where: {
+      user_id: userId,
+    },
+    orderBy: {
+      created_at: 'desc',
+    },
+    include: {
+      book: true,
+    },
   })
 
-  try {
-    if (params) {
-      const response = await fetch(
-        `${process.env.API_URL}/rating/user-latest?${params}`,
-        {
-          method: 'GET',
-        },
-      )
-
-      const data = await response.json()
-      return data
-    }
-  } catch (error) {
-    console.error(error)
-  }
+  return latestUserRating
 }
