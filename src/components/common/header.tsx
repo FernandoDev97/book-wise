@@ -125,11 +125,13 @@ export const Header = () => {
         </SheetContent>
       </Sheet>
       <div className=" ">
-        <img
-          className="w-[90px] h-[50px] lg:w-[128px] lg:h-[64px]"
-          src="/images/Logo.svg"
-          alt="Book wise logo"
-        />
+        <Link href="/">
+          <img
+            className="w-[100px] h-[54px] lg:w-[128px] lg:h-[64px]"
+            src="/images/Logo.svg"
+            alt="Book wise logo"
+          />
+        </Link>
       </div>
 
       <div className="w-6 h-6 " />

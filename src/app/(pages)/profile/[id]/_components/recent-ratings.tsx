@@ -7,12 +7,26 @@ import {
   RatingWithBookAndCategories,
   RecentRatingCard,
 } from './recent-rating-card'
+import { ProfileDetalis } from './profile-detalis'
 
 interface RecentRatingsProps {
   ratings: RatingWithBookAndCategories[]
+  profile: {
+    user: {
+      id: string
+      image: string
+      name: string
+      member_since: string
+    }
+    ratings: RatingWithBookAndCategories[]
+    readPages: number
+    ratedBooks: number
+    readAuthors: number
+    mostReadCategory?: string
+  }
 }
 
-export const RecentRatings = ({ ratings }: RecentRatingsProps) => {
+export const RecentRatings = ({ ratings, profile }: RecentRatingsProps) => {
   const [search, setSearch] = useState('')
 
   const filteredRatings = useMemo(() => {
@@ -26,7 +40,7 @@ export const RecentRatings = ({ ratings }: RecentRatingsProps) => {
 
   return (
     <div className="flex flex-col gap-8 overflow-hidden">
-      <form className="w-full relative focus-within:border-green-200 focus-within:text-green-200 border border-gray-500 rounded transition-all">
+      <form className="hidden lg:block w-full relative focus-within:border-green-200 focus-within:text-green-200 border border-gray-500 rounded transition-all">
         <Input
           value={search}
           onChange={({ target }) => setSearch(target.value)}
@@ -39,12 +53,19 @@ export const RecentRatings = ({ ratings }: RecentRatingsProps) => {
         />
       </form>
 
+      <div className="block lg:hidden">
+        <ProfileDetalis profile={profile} />
+      </div>
+
       {!!filteredRatings.length && (
-        <div className="flex flex-col gap-6 overflow-auto no-scrollbar">
-          {filteredRatings.map((rating) => (
-            <RecentRatingCard key={rating.id} rating={rating} />
-          ))}
-        </div>
+        <>
+          <p className="text-lg font-bold lg:hidden">Ultimas avaliações</p>
+          <div className="flex gap-3 md:grid md:grid-cols-2 lg:flex lg:flex-col lg:gap-6 overflow-auto no-scrollbar">
+            {filteredRatings.map((rating) => (
+              <RecentRatingCard key={rating.id} rating={rating} />
+            ))}
+          </div>
+        </>
       )}
 
       {!filteredRatings.length && !!ratings.length && (

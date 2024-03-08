@@ -56,7 +56,7 @@ export const ExploreBooks = ({
   }, [booksWithAvgRating, search])
 
   return (
-    <div className="w-full flex flex-col justify-start gap-9 lg:gap-12 h-full overflow-hidden pb-5">
+    <div className="w-full flex flex-col justify-start gap-3 lg:gap-12 h-full overflow-hidden pb-5">
       <div className="flex flex-col gap-10 md:gap-0 md:grid md:grid-cols-2">
         <PageTitle title="Explorar" />
         <form className="w-full relative focus-within:border-green-200 focus-within:text-green-200 border border-gray-500 rounded transition-all">
