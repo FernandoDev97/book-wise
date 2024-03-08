@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { options } from '@/app/api/auth/[...nextauth]/options'
 import { PageTitle } from '@/components/common/page-title'
 import { getServerSession } from 'next-auth'
@@ -32,7 +33,9 @@ interface ProfilePageProps {
 }
 
 const ProfilePage = async ({ params }: ProfilePageProps) => {
-  const { profile }: ProfileDataTypes = await getProfile(params?.id as string)
+  const { profile }: ProfileDataTypes | any = await getProfile(
+    params?.id as string,
+  )
   const session = await getServerSession(options)
 
   if (params.id !== profile.user.id) {

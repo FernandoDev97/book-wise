@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BookWithAvgRating, RatingWithAuthor } from '@/@types/types-prisma'
 import { RatingStars } from '@/components/common/rating-stars'
 import { Button } from '@/components/ui/button'
@@ -44,10 +45,11 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
     queryKey: ['book', currentBook.id],
     queryFn: async () => {
       const data = await getBookDetails(currentBook.id)
-      const { book } = data
+      const { book }: any = data
 
       return book
     },
+    enabled: open,
   })
 
   useEffect(() => {
@@ -110,7 +112,10 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
               </p>
             </div>
 
-            <RatingStars rating={currentBook.avgRating} className="mt-auto" />
+            <RatingStars
+              rating={currentBook.avgRating as number}
+              className="mt-auto"
+            />
           </div>
         </Link>
       </SheetTrigger>
@@ -142,7 +147,7 @@ export const BookItem = ({ currentBook, bookId }: BookItemProps) => {
                   <div className="flex flex-col gap-1">
                     <RatingStars
                       size={20}
-                      rating={currentBook.avgRating}
+                      rating={currentBook.avgRating as number}
                       className="lg:mt-auto"
                     />
                     <span className="text-sm text-start text-gray-400">

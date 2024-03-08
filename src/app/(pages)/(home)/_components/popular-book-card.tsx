@@ -1,10 +1,18 @@
-import { BookWithAvgRating } from '@/@types/types-prisma'
 import { RatingStars } from '@/components/common/rating-stars'
 import Image from 'next/image'
 import Link from 'next/link'
 
 interface PopularBookCardProps {
-  book: BookWithAvgRating
+  book: {
+    avgRating: number | null | undefined
+    id: string
+    name: string
+    author: string
+    summary: string
+    cover_url: string
+    total_pages: number
+    created_at: Date
+  }
 }
 
 export const PopularBookCard = ({ book }: PopularBookCardProps) => {
@@ -27,7 +35,11 @@ export const PopularBookCard = ({ book }: PopularBookCardProps) => {
             <p className="text-base font-bold line-clamp-2 ">{book.name}</p>
             <p className="text-gray-400 text-sm line-clamp-1">{book.author}</p>
           </div>
-          <RatingStars rating={book.avgRating} className="mt-auto" size={16} />
+          <RatingStars
+            rating={book.avgRating as number}
+            className="mt-auto"
+            size={16}
+          />
         </div>
       </div>
     </Link>
