@@ -35,11 +35,11 @@ export const RatingForm = ({ cancelShowForm, bookId }: RatingFormProps) => {
       }
       try {
         const response = await createNewRate(formData)
-        if (response.message) {
+        if (response?.message) {
           return toast(response.message)
         }
 
-        if (response.error) {
+        if (response?.error) {
           return toast(response.error)
         }
       } catch (e) {
