@@ -12,8 +12,8 @@ export const LatestRatingCard = async () => {
   const userId = session?.user.id
 
   const rating = await getUserLatestRating(String(userId))
-  const distance = getRelativeTimeString(
-    new Date(rating?.created_at as Date),
+  const distance = await getRelativeTimeString(
+    new Date(rating ? (rating?.created_at as Date) : new Date()),
     'pt-BR',
   )
 
