@@ -1,18 +1,16 @@
-import { RatingWithUserAndBook } from '@/@types/types-prisma'
 import { RatingCard } from '@/app/(pages)/(home)/_components/rating-card'
 import React from 'react'
+import { recentRatings as recentRatingsMany } from '../_actions/recent-ratings'
 
-interface RecentRatingsProps {
-  recentRatings: RatingWithUserAndBook[]
-}
+export const RecentRatings = async () => {
+  const recentRatings = await recentRatingsMany()
 
-export const RecentRatings = ({ recentRatings }: RecentRatingsProps) => {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm">Avaliações mais recentes</p>
 
       <section className="flex overflow-auto no-scrollbar lg:flex-col gap-3">
-        {recentRatings.map((recentRating) => (
+        {recentRatings?.map((recentRating) => (
           <RatingCard key={recentRating.id} rating={recentRating} />
         ))}
       </section>
