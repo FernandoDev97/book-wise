@@ -6,6 +6,11 @@ import { Suspense } from 'react'
 import { LoadingRecentsRatings } from './_components/loading-recents-ratings'
 import { LoadingLatestRating } from './_components/loading-latest-rating'
 import { LoadingPopularBooks } from './_components/loading-popular-books'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Início',
+}
 
 const Home = async () => {
   return (
