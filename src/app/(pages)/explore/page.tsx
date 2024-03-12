@@ -3,6 +3,11 @@ import { prismaClient } from '@/lib/prisma'
 import React from 'react'
 import { findCategoriesBooks } from './_actions/find-categories-books'
 import { redirect } from 'next/navigation'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Livros',
+}
 
 interface ExplorePageProps {
   searchParams: {

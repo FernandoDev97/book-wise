@@ -9,6 +9,7 @@ import { redirect } from 'next/navigation'
 import { RecentRatings } from './_components/recent-ratings'
 import { RatingWithBookAndCategories } from './_components/recent-rating-card'
 import { ProfileDetalis } from './_components/profile-detalis'
+import { Metadata } from 'next'
 
 export interface ProfileDataTypes {
   profile: {
@@ -64,3 +65,14 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
 }
 
 export default ProfilePage
+
+export async function generateMetadata({
+  params,
+}: ProfilePageProps): Promise<Metadata> {
+  const { profile }: ProfileDataTypes | any = await getProfile(
+    params?.id as string,
+  )
+  return {
+    title: profile.user.name,
+  }
+}
